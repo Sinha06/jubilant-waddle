@@ -1,0 +1,28 @@
+{
+  "name": "jubilant-waddle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "cross-env CONFIG_SRC=FILE node src/framework/entrypoint/local.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sinha06/jubilant-waddle.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sinha06/jubilant-waddle/issues"
+  },
+  "homepage": "https://github.com/Sinha06/jubilant-waddle#readme",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "@hapi/hapi": "^21.3.9",
+    "@hapi/joi": "^17.1.1"
+  }
+}
