@@ -11,6 +11,8 @@ import SecurityHandler from './services/security/SecurityHandlers.js';
 import JwtTokenProvider from './lib/JwtTokenProvider/JwtTokenProvider.js';
 import { validateToken, validateError } from './lib/JwtTokenProvider/validateTokenUtils.js';
 import UserProvider from './services/user/UserProvider.js';
+import ProductProvider from './services/products/ProductProvider.js';
+import CartProvider from './services/cart/CartProvider.js';
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename);
@@ -98,6 +100,20 @@ class FoodHubService {
 
     this._userProvider = new UserProvider(this);
     return this._userProvider;
+  }
+
+  async getProductProvider() {
+    if (this._productProvider) return this._productProvider;
+
+    this._productProvider = new ProductProvider(this);
+    return this._productProvider;
+  }
+
+  async getCartProvider() {
+    if (this._cartProvider) return this._cartProvider;
+
+    this._cartProvider = new CartProvider(this);
+    return this._cartProvider;
   }
 }
 
