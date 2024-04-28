@@ -1,6 +1,8 @@
-const Joi = require('@hapi/joi');
+import Joi from '@hapi/joi';
 
-module.exports = Joi.object({
+export default Joi.object().keys({
   HOSTED_HOST: Joi.string().required(),
-  HOSTED_PORT: Joi.number().required()
+  HOSTED_PORT: Joi.number().required(),
+  TOKEN_VALIDATIONKEY: Joi.string().required(),
+  MONGO_DB_URL: Joi.string().required()
 });

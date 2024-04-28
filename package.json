@@ -2,7 +2,7 @@
   "name": "jubilant-waddle",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "cross-env CONFIG_SRC=FILE node src/framework/entrypoint/local.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,11 +18,24 @@
   },
   "homepage": "https://github.com/Sinha06/jubilant-waddle#readme",
   "devDependencies": {
+    "@eslint/js": "^9.1.1",
     "cross-env": "^7.0.3",
+    "eslint": "^9.1.1",
+    "globals": "^15.0.0",
     "nodemon": "^3.1.0"
   },
   "dependencies": {
+    "@hapi/basic": "^7.0.2",
+    "@hapi/boom": "^10.0.1",
     "@hapi/hapi": "^21.3.9",
-    "@hapi/joi": "^17.1.1"
+    "@hapi/joi": "^17.1.1",
+    "@hapi/jwt": "^3.2.0",
+    "basic-auth": "^2.0.1",
+    "bcrypt": "^5.1.1",
+    "hapi-auth-jwt2": "^10.5.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.5.0",
+    "sha1": "^1.1.1",
+    "uuid": "^9.0.1"
   }
 }

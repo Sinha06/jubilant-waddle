@@ -1,4 +1,4 @@
-const {readFileSync} = require('fs');
+import { readFileSync } from 'fs';
 
 const CONFIG_SOURCES = {
     ENV: 'ENV',
@@ -13,11 +13,12 @@ const loadJson = (path) => {
 
   const fetchConfig = (options) => {
     try {
+        // eslint-disable-next-line no-undef
         const configSource = process.env.CONFIG_SRC;
         if (!configSource || configSource === CONFIG_SOURCES.ENV) {
             console.info('Loading configuration from environments variables');
         }
-        if (configSource === CONFIG_SOURCES.FILE) { // deprecated
+        if (configSource === CONFIG_SOURCES.FILE) {
             if (!options.localConfigPath) {
               throw new Error('You must pass localConfigPath.');
             }
@@ -34,7 +35,7 @@ const loadJson = (path) => {
 
   };
 
-  module.exports = {
+  export {
     loadJson,
     fetchConfig
   }

@@ -1,4 +1,4 @@
-const { FoodHubService } = require('../../service');
+import FoodHubService from '../../service.js';
 const init = async () => {
     const service = new FoodHubService();
     await service.onBoot();
@@ -21,9 +21,11 @@ const init = async () => {
     }
   };
 
-process.on('unhandledRejection', (err) => {
-    console.error(err);
-    process.exit(1);
-  });
+// eslint-disable-next-line no-undef
+process.on("unhandledRejection", (err) => {
+  console.error(err);
+  // eslint-disable-next-line no-undef
+  process.exit(1);
+});
   
   init();
