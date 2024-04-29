@@ -18,6 +18,13 @@ class CartRepository {
         { upsert: true }
       );
     }
+
+    async deleteCart (customerId) {
+        const db = await this.service.getMongoDb();
+        return await db.collection(this.cartCollection).deleteOne({
+            customerId
+          });
+    }
   }
   
   export default CartRepository;

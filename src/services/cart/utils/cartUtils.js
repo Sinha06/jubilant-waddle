@@ -14,3 +14,13 @@ export const getUpdatedProducts = (productsInCart, products) => {
 
     return productsInCart;
 };
+
+export const removeProductFromCart = (products, skuToRemove) => {
+    for (const product of products) {
+        if (product.sku === skuToRemove) {
+            const indexToRemove = products.indexOf(product);
+            products.splice(indexToRemove, 1);
+        }
+    }
+    return products;
+}

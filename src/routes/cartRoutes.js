@@ -55,3 +55,31 @@ export const addProductsToCart = {
     return await cartProvider.addProductsToCart(token, headerCredentials, products);
   },
 };
+
+export const removeProductFromCart = {
+  path: "/v1.0/cart/products",
+  method: "DELETE",
+  options: {
+    tags: ["api"],
+    ...sharedRouteConfig,
+    validate: {
+      payload: Joi.object()
+        .keys({
+            sku: Joi.string().required(),
+        })
+        .required(),
+      failAction: (request, h, err) => {
+        throw err;
+      },
+    },
+  },
+  handler: async (request, h) => {
+    const { service } = request.server.app;
+    const headerCredentials = request.auth.credentials;
+    const {customerId} = headerCredentials;
+    const token = request.headers.authorization;
+    const {sku} = request.payload;
+    const cartProvider = await service.getCartProvider();
+    return await cartProvider.removeProductFromCart(customerId, sku);
+  },
+};

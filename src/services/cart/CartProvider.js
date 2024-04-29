@@ -1,7 +1,7 @@
 import Boom from '@hapi/boom';
 import CartRepository from './CartRepository.js';
 import { calculateOrderPrice, calculateOrderLinePrice } from '../../lib/priceUtils/orderPricing.js';
-import { getUpdatedProducts } from './utils/cartUtils.js';
+import { getUpdatedProducts, removeProductFromCart } from './utils/cartUtils.js';
 
 class CartProvider {
   constructor(service) {
@@ -25,10 +25,13 @@ class CartProvider {
 
   async getCart(customerId) {
     const productProvider = await this.service.getProductProvider();
-    const {_id: cartId, products: cartProducts } = await this.cartRepository.getCart(customerId); //ToDO
-    const cartItems  = cartProducts.map(p => p.sku).join(',');
+    const cart = await this.cartRepository.getCart(customerId); //ToDO
+    if(!cart) {
+        return {}
+    }
+    const cartItems  = cart.products.map(p => p.sku).join(',');
     const productDetails = await productProvider.getProductsBySkus(cartItems);
-    const cartItemsWithProductDetails = cartProducts.map(i => {
+    const cartItemsWithProductDetails = cart.products.map(i => {
         const product = productDetails.find(p => p.sku === i.sku);
         return {
             ...i,
@@ -38,7 +41,7 @@ class CartProvider {
     const orderPrice =  this.getOrderPrice(cartItemsWithProductDetails);
     return {
         customerId,
-        cartId,
+        cartId: cart._id,
         ...orderPrice,
     }
   }
@@ -55,6 +58,20 @@ class CartProvider {
     const existingCart = await this.cartRepository.getCart('d363d232-38d5-41fd-8404-f3970b6fcb28'); //ToDO
     const productsInCart = existingCart ? existingCart.products : [];
     const updatedProducts = getUpdatedProducts(productsInCart, products);
+    await this.cartRepository.updateProducts('d363d232-38d5-41fd-8404-f3970b6fcb28', updatedProducts);
+    return await this.getCart('d363d232-38d5-41fd-8404-f3970b6fcb28');
+  }
+
+  async removeProductFromCart (customerId, skuToRemove) {
+    const existingCart = await this.cartRepository.getCart('d363d232-38d5-41fd-8404-f3970b6fcb28'); //ToDO
+    if(!existingCart) {
+        return {};
+    }
+    const updatedProducts = removeProductFromCart(existingCart.products, skuToRemove);
+    if(!updatedProducts.length) {
+        await this.cartRepository.deleteCart('d363d232-38d5-41fd-8404-f3970b6fcb28');
+        return {};
+    }
     await this.cartRepository.updateProducts('d363d232-38d5-41fd-8404-f3970b6fcb28', updatedProducts);
     return await this.getCart('d363d232-38d5-41fd-8404-f3970b6fcb28');
   }
