@@ -77,5 +77,16 @@ class UserProvider {
       }
       
     }
+
+    async getUserByCustomerId(customerId) {
+      const userProjection = {
+        customerId: 1,
+        email: 1,
+        firstName: 1,
+        lastName: 1
+      }; 
+      return await this.userRepository.getUserByCustomerId(customerId, userProjection);
+    }
+      
 }
 export default UserProvider;

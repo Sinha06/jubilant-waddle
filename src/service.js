@@ -13,6 +13,7 @@ import { validateToken, validateError } from './lib/JwtTokenProvider/validateTok
 import UserProvider from './services/user/UserProvider.js';
 import ProductProvider from './services/products/ProductProvider.js';
 import CartProvider from './services/cart/CartProvider.js';
+import OrderProvider from './services/order/OrdersProvider.js';
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename);
@@ -114,6 +115,13 @@ class FoodHubService {
 
     this._cartProvider = new CartProvider(this);
     return this._cartProvider;
+  }
+
+  async getOrderProvider() {
+    if (this._orderProvider) return this._orderProvider;
+
+    this._orderProvider = new OrderProvider(this);
+    return this._orderProvider;
   }
 }
 

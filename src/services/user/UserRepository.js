@@ -21,12 +21,12 @@ class UserRepository {
       }
     );
   }
-  async getUserByCustomerId(customerId) {
+  async getUserByCustomerId(customerId, projection = null) {
     const db = await this.service.getMongoDb();
     return await db.collection(this.usersCollection).findOne(
       { customerId },
       {
-        projection: {
+        projection: projection ? projection : {
           customerId: 1,
           userCode: 1,
           email: 1,
