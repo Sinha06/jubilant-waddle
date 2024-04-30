@@ -1,4 +1,6 @@
 {
     "HOSTED_HOST": "0.0.0.0",
-    "HOSTED_PORT": "5007"
+    "HOSTED_PORT": "8001",
+    "TOKEN_VALIDATIONKEY": "test",
+    "MONGO_DB_URL": "mongodb://username:password@localhost:27017/"
 }
