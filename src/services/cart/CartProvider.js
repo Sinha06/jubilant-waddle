@@ -63,7 +63,7 @@ class CartProvider {
   }
 
   async removeProductFromCart (customerId, skuToRemove) {
-    const existingCart = await this.cartRepository.getCart(customerId); //ToDO
+    const existingCart = await this.cartRepository.getCart(customerId);
     if(!existingCart) {
         return {};
     }
@@ -74,6 +74,14 @@ class CartProvider {
     }
     await this.cartRepository.updateProducts(customerId, updatedProducts);
     return await this.getCart(customerId);
+  }
+
+  async clearCart (customerId) {
+    const existingCart = await this.cartRepository.getCart(customerId);
+    if(!existingCart) {
+      return {};
+  }
+    return await this.cartRepository.deleteCart(customerId)
   }
 
 }

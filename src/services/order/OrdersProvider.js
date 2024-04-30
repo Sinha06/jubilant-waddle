@@ -41,6 +41,8 @@ class OrdersProvider {
   async saveOrder(customerId, orderData) {
     try {
       const order = await this.saveOrderHelper(customerId, orderData);
+      const cartProvider = await this.service.getCartProvider();
+      await cartProvider.clearCart(customerId); 
       const { orderReference } = order;
       return { orderReference };
     } catch (error) {
