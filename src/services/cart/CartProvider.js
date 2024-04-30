@@ -55,25 +55,25 @@ class CartProvider {
     if(!isAllProductAvailable) {
         throw Boom.badImplementation('All products not available');
     }
-    const existingCart = await this.cartRepository.getCart('d363d232-38d5-41fd-8404-f3970b6fcb28'); //ToDO
+    const existingCart = await this.cartRepository.getCart(customerId);
     const productsInCart = existingCart ? existingCart.products : [];
     const updatedProducts = getUpdatedProducts(productsInCart, products);
-    await this.cartRepository.updateProducts('d363d232-38d5-41fd-8404-f3970b6fcb28', updatedProducts);
-    return await this.getCart('d363d232-38d5-41fd-8404-f3970b6fcb28');
+    await this.cartRepository.updateProducts(customerId, updatedProducts);
+    return await this.getCart(customerId);
   }
 
   async removeProductFromCart (customerId, skuToRemove) {
-    const existingCart = await this.cartRepository.getCart('d363d232-38d5-41fd-8404-f3970b6fcb28'); //ToDO
+    const existingCart = await this.cartRepository.getCart(customerId); //ToDO
     if(!existingCart) {
         return {};
     }
     const updatedProducts = removeProductFromCart(existingCart.products, skuToRemove);
     if(!updatedProducts.length) {
-        await this.cartRepository.deleteCart('d363d232-38d5-41fd-8404-f3970b6fcb28');
+        await this.cartRepository.deleteCart(customerId);
         return {};
     }
-    await this.cartRepository.updateProducts('d363d232-38d5-41fd-8404-f3970b6fcb28', updatedProducts);
-    return await this.getCart('d363d232-38d5-41fd-8404-f3970b6fcb28');
+    await this.cartRepository.updateProducts(customerId, updatedProducts);
+    return await this.getCart(customerId);
   }
 
 }

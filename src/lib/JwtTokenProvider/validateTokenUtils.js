@@ -1,4 +1,4 @@
-export const validateToken = (token, request) => {
+export const validateToken = (token) => {
   if (token.roles && token.roles.indexOf("Everyone") > -1) {
     return { isValid: true };
   }

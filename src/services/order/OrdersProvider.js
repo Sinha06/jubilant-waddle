@@ -23,12 +23,11 @@ class OrdersProvider {
   }
 
   async saveOrderHelper(customerId, orderData) {
-    const _customerId = 'd363d232-38d5-41fd-8404-f3970b6fcb28';
     const userProvider = await this.service.getUserProvider();
     const cartProvider = await this.service.getCartProvider();
     const [userData, cartData] = await Promise.all([
-      userProvider.getUserByCustomerId(_customerId),
-      cartProvider.getCart(_customerId),
+      userProvider.getUserByCustomerId(customerId),
+      cartProvider.getCart(customerId),
     ]);
 
     const orderPayload = newOrderPayloadMap(orderData, cartData, userData);
@@ -51,11 +50,11 @@ class OrdersProvider {
   }
 
   async getOrderByReference (customerId, orderReference) {
-    const order = await this.orderRepository.getOrderByReference('d363d232-38d5-41fd-8404-f3970b6fcb28', orderReference);
+    const order = await this.orderRepository.getOrderByReference(customerId, orderReference);
     return order;
   }
   async getCustomerOrders(customerId, limit, skip) {
-    const order = await this.orderRepository.getCustomerOrders('d363d232-38d5-41fd-8404-f3970b6fcb28', limit, skip);
+    const order = await this.orderRepository.getCustomerOrders(customerId, limit, skip);
     return order;
   }
 }

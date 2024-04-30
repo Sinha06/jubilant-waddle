@@ -39,9 +39,8 @@ export const login = {
     handler: async (request, h) => {
       const { service } = request.server.app;
       const securityHandler = await service.getSecurityHandler();
-      const tokenInfo = securityHandler.getTokenInfo(request);
       const { email, password, sub } = request.payload.loginData;
-      return securityHandler.login(email, password, sub, tokenInfo);
+      return securityHandler.login(email, password, sub);
     }
   };
 

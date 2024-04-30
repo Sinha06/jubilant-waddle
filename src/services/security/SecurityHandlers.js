@@ -33,6 +33,7 @@ class SecurityHandler {
         customerId: user.customerId,
         email: user.email,
         name: `${user.firstName} ${user.lastName}`,
+        roles: ['Everyone'],
         isRegistered: true,
         sub: subjectId,
       };
@@ -46,8 +47,8 @@ class SecurityHandler {
     return this.getExistingCustomerTokenData(email, password, subjectId);
   }
 
-  async getToken(email, password, subjectId, customerId = null) {
-    const tokenData = await this.getTokenData(email, password, subjectId, customerId);
+  async getToken(email, password, subjectId) {
+    const tokenData = await this.getTokenData(email, password, subjectId);
     
     const token = {
         'token': this.jwtTokenProvider.getToken(tokenData, { expiresIn: 30 * 1000 })
@@ -63,13 +64,6 @@ class SecurityHandler {
     return this.getToken(email, password, subjectId);
   }
 
-  getTokenInfo (request) {
-    return {
-      token: request.headers.authorization.substring('Bearer '.length),
-      type: 'anonymous'
-    };
-  }
-
   async login(email, password, subjectId) {
     try {
       if (!email || !password) {
@@ -81,7 +75,7 @@ class SecurityHandler {
       if (!isUserValid) {
         return Boom.unauthorized(`Invalid email address or password ${message}`);
       }
-      const {token} = await this.getToken(user.email, password, subjectId);
+      const { token } = await this.getToken(user.email, password, subjectId);
       const name = `${user.firstName} ${user.lastName}`;
       return {
         token,

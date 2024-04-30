@@ -22,7 +22,7 @@ export const getCart = {
     const headerCredentials = request.auth.credentials;
     const { customerId } = headerCredentials;
     const cartProvider = await service.getCartProvider();
-    return await cartProvider.getCart('d363d232-38d5-41fd-8404-f3970b6fcb28');
+    return await cartProvider.getCart(customerId);
   },
 };
 
